@@ -1,0 +1,15 @@
+appId: com.taskmanager.app
+---
+# Navegación básica: Home -> Próximos estrenos -> Volver al inicio.
+- launchApp:
+    clearState: true
+- assertVisible: "Task Manager"
+- tapOn: "Próximos estrenos"
+- assertVisible: "Próximos estrenos"
+- assertVisible:
+    id: "input-busqueda"
+# accessibilityLabel, no el texto visible del botón (ver movies_filter.yaml).
+- assertVisible: "Mostrar todas las películas"
+- assertVisible: "Mostrar solo películas que he calificado"
+- tapOn: "Volver al inicio"
+- assertVisible: "Task Manager"

@@ -1,0 +1,87 @@
+appId: com.taskmanager.app
+---
+# Flujo completo de reseñas sobre una película real (la primera de la lista
+# de próximos estrenos, cualquiera que sea): crear, editar y eliminar.
+# Usa regex anclada ("^...$") en los botones "Eliminar"/"Cancelar" del
+# diálogo de confirmación para no confundirlos con "Eliminar reseña", que
+# sigue montado (aunque tapado por el modal) mientras el diálogo está abierto.
+#
+# La pantalla es un ScrollView largo (póster + título + tráiler + info +
+# géneros + sinopsis antes de llegar al formulario de reseña), así que se usa
+# scrollUntilVisible en vez de assertVisible/tapOn directo para los elementos
+# del formulario: assertVisible NO hace scroll por sí solo.
+#
+# Tras escribir en el campo de comentario, el teclado queda abierto y puede
+# tapar visualmente el botón "Guardar reseña" (el toque físico cae sobre el
+# teclado, no sobre el botón, aunque Maestro reporte el tap como exitoso por
+# encontrar el elemento en la jerarquía) -> se usa hideKeyboard antes de
+# presionar guardar.
+- launchApp:
+    clearState: true
+- tapOn: 'Próximos estrenos'
+- assertVisible: 'Próximos estrenos'
+
+# Buscar película
+- tapOn:
+    id: 'input-busqueda'
+- inputText: 'La llegada'
+- hideKeyboard
+- tapOn: 'Buscar'
+- tapOn:
+    text: 'Ver detalle de la llegada*'
+    index: 0
+- assertVisible: 'Tu reseña'
+- scrollUntilVisible:
+    element: 'Guardar reseña'
+    direction: DOWN
+
+# Crear reseña
+- tapOn: 'Calificar con 4 estrellas'
+- tapOn:
+    id: 'input-comentario'
+- inputText: 'Muy buena película, la recomiendo.'
+- hideKeyboard
+- tapOn: 'Guardar reseña'
+- assertVisible: 'Reseña guardada'
+- tapOn: 'Aceptar'
+- assertVisible: 'Editar reseña'
+
+- swipe:
+    direction: DOWN
+- tapOn: 'Volver a la lista de películas'
+- assertVisible: 'Próximos estrenos'
+- assertVisible: 'Mostrar solo películas que he calificado'
+- tapOn: 'Mostrar solo películas que he calificado'
+- tapOn:
+    text: 'Ver detalle de La llegada'
+    index: 0
+- assertVisible: 'Tu reseña'
+- scrollUntilVisible:
+    element: 'Editar reseña'
+    direction: DOWN
+
+# Editar reseña
+- tapOn: 'Editar reseña'
+- assertVisible: 'Guardar reseña'
+- tapOn: 'Calificar con 5 estrellas'
+- tapOn:
+    id: 'input-comentario'
+- eraseText: 100
+- inputText: 'Comentario editado desde Maestro.'
+- hideKeyboard
+- tapOn: 'Guardar reseña'
+- assertVisible: 'Reseña guardada'
+- tapOn: 'Aceptar'
+- assertVisible: 'Editar reseña'
+
+# Eliminar reseña
+- scrollUntilVisible:
+    element: 'Eliminar reseña'
+    direction: DOWN
+- tapOn: 'Eliminar reseña'
+- assertVisible: '¿Seguro que quieres eliminar tu reseña? Esta acción no se puede deshacer.'
+- tapOn:
+    text: '^Eliminar$'
+- assertVisible: 'Reseña eliminada'
+- tapOn: 'Aceptar'
+- assertVisible: 'Guardar reseña'
