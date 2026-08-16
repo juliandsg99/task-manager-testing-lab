@@ -1,1 +1,1 @@
-export { CreateTaskScreen as default } from '../src/screens/CreateTaskScreen';
+export { HomeScreen as default } from '../src/screens/HomeScreen';

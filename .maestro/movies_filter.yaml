@@ -1,0 +1,15 @@
+appId: com.taskmanager.app
+---
+# Filtro "Calificadas": con AsyncStorage limpio (clearState) no hay ninguna
+# reseña guardada todavía, así que el filtro debe mostrar el mensaje de
+# "sin calificadas" en vez de la lista de próximos estrenos.
+- launchApp:
+    clearState: true
+- tapOn: "Próximos estrenos"
+- assertVisible: "Próximos estrenos"
+# Se usa el accessibilityLabel (no el texto visible "Calificadas"): el
+# Pressable expone ese label como su nombre accesible, y el texto interno
+# queda fusionado/oculto para herramientas de automatización como Maestro.
+- tapOn: "Mostrar solo películas que he calificado"
+- assertVisible: "Todavía no has calificado ninguna película"
+- tapOn: "Mostrar todas las películas"

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
+import { Link } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { TaskForm } from '../components/TaskForm';
 import { TaskList } from '../components/TaskList';
@@ -18,6 +19,11 @@ export function CreateTaskScreen() {
       className="flex-1 gap-4 bg-gray-50 p-4"
       style={{ paddingTop: insets.top + 16, paddingBottom: insets.bottom + 16 }}
     >
+      <Link href="/" asChild>
+        <Pressable accessibilityRole="link" accessibilityLabel="Volver al inicio">
+          <Text className="text-sm font-medium text-blue-600">← Volver al inicio</Text>
+        </Pressable>
+      </Link>
       <Text className="text-2xl font-bold text-gray-900">Nueva tarea</Text>
       <TaskForm onSubmit={submit} />
       {status === 'success' && (

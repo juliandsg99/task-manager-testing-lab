@@ -1,0 +1,17 @@
+appId: com.taskmanager.app
+---
+# Búsqueda: escribe un título, presiona Buscar y verifica que la pantalla
+# cambia a modo "Resultados de búsqueda" (el título cambia según el modo del
+# hook, independientemente de si la API devuelve resultados o falla), y que
+# se puede volver a Próximos estrenos.
+- launchApp:
+    clearState: true
+- tapOn: "Próximos estrenos"
+- assertVisible: "Próximos estrenos"
+- tapOn:
+    id: "input-busqueda"
+- inputText: "spider"
+- tapOn: "Buscar"
+- assertVisible: "Resultados de búsqueda"
+- tapOn: "Ver próximos estrenos"
+- assertVisible: "Próximos estrenos"
