@@ -40,6 +40,9 @@ yarn-error.*
 # test coverage
 coverage/
 
+# Reassure performance test results
+.reassure/
+
 # generated native folders
 /ios
 /android
