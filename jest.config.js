@@ -3,6 +3,13 @@ const expoPreset = require('jest-expo/jest-preset');
 module.exports = {
   preset: 'jest-expo',
   setupFilesAfterEnv: ['./jest.setup.js'],
+  // Por defecto Jest matchea CUALQUIER archivo dentro de __tests__/, lo que
+  // incluiría los *.perf-test.tsx de Reassure en las corridas normales de
+  // `npm test` (mucho más lentas: Reassure repite cada test varias veces).
+  // Reassure no usa este testMatch — su CLI pasa el suyo propio vía
+  // `--testMatch`, que sobreescribe esta opción, así que igual encuentra
+  // los perf tests sin importar esta restricción.
+  testMatch: ['**/__tests__/**/*.test.{js,jsx,ts,tsx}'],
   // ponytail: jest-expo's transform only matches .[jt]sx; msw ships .mjs deps
   // (rettime, @mswjs/interceptors). Add a .mjs -> babel-jest rule alongside them.
   transform: {
